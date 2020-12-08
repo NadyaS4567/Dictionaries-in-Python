@@ -1,0 +1,720 @@
+<h2>Содержание</h2>
+<div class="ws-grid">
+	<div class="ws-6">
+		<ul>
+			<li><a href="#tips">Определение словаря</a></li>
+			<li><a href="#tips1">Доступ к значениям словаря</a></li>
+			<li><a href="#tips2">Ключи словаря и индексы списка</a></li>
+			<li><a href="#tips3">Постепенное создание словаря</a></li>
+			<li><a href="#tips4">Ограничения для ключей словаря</a></li>
+			<li><a href="#tips5">Ограничения на значения словаря</a></li>
+			<li><a href="#tips6">Операторы и встроенные функции</a></li>
+		</ul>
+	</div>
+	
+	<div class="ws-6">
+		<ul>
+			<li><a href="#tips7">Встроенные словарные методы</a>
+				<ul>
+					<li>d.clear()</li>
+					<li>d.get([, ])</li>
+					<li>d.items()</li>
+					<li>d.keys()</li>
+					<li>d.values()</li>
+					<li>d.pop([, ])</li>
+					<li>d.popitem()</li>
+					<li>d.update()</li>
+					<li><a href="#tips8">Вывод</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+<!--more Поехали...-->
+
+<p>Python предоставляет еще один составной тип данных, называемый словарем, который похож на список в том, что он представляет собой набор объектов.</p>
+
+<p>Вот что вы узнаете из этого урока: вы рассмотрите основные характеристики словарей Python и узнаете, как получить доступ к данным словаря и управлять ими. 
+После того, как вы закончите этот учебник, вы должны иметь хорошее представление о том, когда словарь является подходящим типом данных для использования, и как это сделать.</p>
+
+Словари и списки имеют следующие характеристики:
+<ul>
+	<li>Оба изменчивы.</li>
+	<li>Оба динамичны. Они могут увеличиваться и уменьшаться по мере необходимости.</li>
+	<li>Оба могут быть вложенными. Список может содержать другой список. Словарь может содержать другой словарь. Словарь также может содержать список, и наоборот.</li>
+</ul>
+
+Словари отличаются от списков в первую очередь способом доступа к элементам:
+<ul>
+<li>Доступ к элементам списка осуществляется по их положению в списке через индексацию.</li>
+<li>Доступ к элементам словаря осуществляется с помощью ключей.</li>
+<ul>
+
+<h2 id="tips">Определение словаря</h2>
+<p>Словари&nbsp;&mdash; это реализация Python структуры данных, более известной как ассоциативный массив. Словарь состоит из набора пар ключ-значение. Каждая пара "ключ-значение" сопоставляет ключ с соответствующим значением.</p>
+
+<p>Вы можете определить словарь, заключив список пар ключ-значение, разделенных запятыми, в фигурные скобки ({}). Двоеточие (:) отделяет каждый ключ от связанного с ним значения:</p>
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+d = {
+	&lt key1 &gt: &lt value1 &gt,
+	&lt key2 &gt: &lt value2 &gt,
+	&lt key3 &gt: &lt value1 &gt,
+		...
+	&lt keyn &gt: &lt valuen &gt,
+}
+</pre>
+
+<p>Следующее определяет словарь, который сопоставляет местоположение с названием соответствующей команды Высшей бейсбольной лиги:</p>
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team = {
+	'Colorado'  : 'Rockies',
+	'Boston'    : 'Red Sox',
+	'Minnesota' : 'Twins',
+	'Milwaukee' : 'Brewers',
+	'Seattle'   : 'Mariners',
+}
+<cod>
+</pre>
+<img src="http://is42-2018.susu.ru/spiridonovani/wp-content/uploads/sites/25/2020/11/3ris.png" alt="" width="584" height="594" class="alignnone size-full wp-image-58" />
+<p>Сопоставление местоположения словаря с командой MLB</p>
+
+
+<p>Вы также можете создать словарь с помощью встроенной dict() функции. Аргумент dict() должен быть последовательностью пар ключ-значение. Для этого хорошо подходит список кортежей:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d = dict([
+	(&lt key &gt, &lt value &gt),
+	(&lt key &gt, &lt value &gt),
+	.
+	.
+	.
+	(&lt key &gt, &lt value &gt),
+])
+<cod>
+</pre>
+<p>MLB_team затем можно определить так:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team = dict([
+...	('Colorado', 'Rockies'),
+...	('Boston', 'Red Sox'),
+... ('Minnesota', 'Twins'),
+... ('Milwaukee', 'Brewers'),
+... ('Seattle', 'Mariners')
+... ])
+<cod>
+</pre>
+<p>Если значения ключа являются простыми строками, их можно указать как аргументы ключевого слова. Итак, вот еще один способ определить MLB_team:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team = dict(
+...	Colorado='Rockies',
+...	Boston='Red Sox',
+... Minnesota='Twins',
+... Milwaukee='Brewers',
+... Seattle='Mariners'
+... )
+<cod>
+</pre>
+<p>После того, как вы определили словарь, вы можете отобразить его содержимое так же, как и для списка. Все три определения, показанные выше, при отображении выглядят следующим образом:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> type(MLB_team)
+<class 'dict'>
+>>> MLB_team
+{'Colorado': 'Rockies', 'Boston': 'Red Sox', 'Minnesota': 'Twins', 'Milwaukee': 'Brewers', 'Seattle': 'Mariners'}rewers', 'Seattle': 'Mariners'}
+<cod>
+</pre>
+<p>Записи в словаре отображаются в том порядке, в котором они были определены. Но когда дело доходит до их получения, это не имеет значения. Доступ к элементам словаря не осуществляется по числовому индексу:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team[1]
+Traceback (most recent call last):
+  File "<pyshell#11>", line 1, in <module>
+    MLB_team[1]
+KeyError: 1
+<cod>
+</pre>
+<a name="tips1"><h2>Доступ к значениям словаря</h2></a>
+<p>Конечно, элементы словаря должны быть как-то доступны. Если вы не получите их по индексу, то как их получить?
+Значение извлекается из словаря путем указания соответствующего ключа в квадратных скобках ([]):</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team['Minnesota']
+'Twins'
+>>> MLB_team['Colorado']
+'Rockies'
+<cod>
+</pre>
+<p>Если вы ссылаетесь на ключ, которого нет в словаре, Python вызывает исключение:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team['Toronto']
+Traceback (most recent call last):
+  File "<pyshell#3>", line 1, in <module>
+    MLB_team['Toronto']
+KeyError: 'Toronto'
+<cod>
+</pre>
+<p>Добавление записи в существующий словарь&nbsp;&mdash; это просто вопрос назначения нового ключа и значения:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team['Kansas City'] = 'Royals'
+>>> MLB_team
+{'Colorado': 'Rockies', 'Boston': 'Red Sox', 'Minnesota': 'Twins', 'Milwaukee': 'Brewers', 'Seattle': 'Mariners', 'Kansas City': 'Royals'}
+<cod>
+</pre>
+<p>Если вы хотите обновить запись, вы можете просто присвоить новое значение существующему ключу:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team['Seattle'] = 'Seahawks'
+>>> MLB_team
+{'Colorado': 'Rockies', 'Boston': 'Red Sox', 'Minnesota': 'Twins', 'Milwaukee': 'Brewers', 'Seattle': 'Seahawks', 'Kansas City': 'Royals'}
+<cod>
+</pre>
+<p>Чтобы удалить запись, используйте оператор удаления del, указав ключ для удаления:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> del MLB_team['Seattle']
+>>> MLB_team
+{'Colorado': 'Rockies', 'Boston': 'Red Sox', 'Minnesota': 'Twins', 'Milwaukee': 'Brewers', 'Kansas City': 'Royals'}
+<cod>
+</pre>
+<a name="tips2"><h2>Ключи словаря и индексы списка</h2></a>
+<p>Вы могли заметить, что интерпретатор показывает ошибку (KeyError), когда к словарю обращаются с неопределенным ключом или по числовому индексу:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team['Toronto']
+Traceback (most recent call last):
+  File "<pyshell#10>", line 1, in <module>
+    MLB_team['Toronto']
+KeyError: 'Toronto'
+
+>>> MLB_team[1]
+Traceback (most recent call last):
+  File "<pyshell#11>", line 1, in <module>
+    MLB_team[1]
+KeyError: 1
+<cod>
+</pre>
+<p>По сути, это та же ошибка. В последнем случае [1] выглядит как числовой индекс, но это не так.
+Позже вы увидите, что объект любого неизменяемого типа может использоваться как ключ словаря. Соответственно, нет причин, по которым нельзя использовать целые числа:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {0: 'a', 1: 'b', 2: 'c', 3: 'd'}
+>>> d
+{0: 'a', 1: 'b', 2: 'c', 3: 'd'}
+>>> d[0]
+'a'
+>>> d[2]
+'c'
+<cod>
+</pre>
+<p>В выражениях MLB_team[1], d[0] и d[2] числа в квадратных скобках выглядят как индексы. Но они не имеют ничего общего с порядком в словаре. Python интерпретирует их как ключи словаря. Если вы определите этот же словарь в обратном порядке, вы все равно получите те же значения, используя те же ключи:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {3: 'd', 2: 'c', 1: 'b', 0: 'a'}
+>>> d
+{3: 'd', 2: 'c', 1: 'b', 0: 'a'}
+>>> d[0]
+'a'
+>>> d[2]
+'c'
+<cod>
+</pre>
+<p>Синтаксис может выглядеть похожим, но вы не можете рассматривать словарь как список:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> type(d)
+<class 'dict'>
+
+>>> d[-1]
+Traceback (most recent call last):
+  File "<pyshell#22>", line 1, in <module>
+    d[-1]
+KeyError: -1
+
+>>> d[0:2]
+Traceback (most recent call last):
+  File "<pyshell#23>", line 1, in <module>
+    d[0:2]
+TypeError: unhashable type: 'slice'
+
+>>> d.append('e')
+Traceback (most recent call last):
+  File "<pyshell#24>", line 1, in <module>
+    d.append('e')
+AttributeError: 'dict' object has no attribute 'append'
+<cod>
+</pre>
+<p>Примечание. Хотя доступ к элементам в словаре не зависит от порядка, Python гарантирует, что порядок элементов в словаре сохраняется. При отображении элементы будут отображаться в том порядке, в котором они были определены, и итерация по ключам также будет происходить в этом порядке. Элементы, добавленные в словарь, добавляются в конце. Если элементы удаляются, порядок остальных элементов сохраняется.
+На такое сохранение порядка можно рассчитывать лишь совсем недавно. Он был добавлен как часть спецификации языка Python в версии 3.7 . Однако это было верно и для версии 3.6&nbsp;&mdash; случайно, в результате реализации, но не гарантированной спецификацией языка.</p>
+
+
+<a name="tips3"><h2>Постепенное создание словаря</h2></a>
+<p>Определение словаря с использованием фигурных скобок и списка пар ключ-значение, как показано выше, нормально, если вы заранее знаете все ключи и значения. Но что, если вы хотите создать словарь на лету?
+Вы можете начать с создания пустого словаря, который обозначен пустыми фигурными скобками. Затем вы можете добавлять новые ключи и значения по одному:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> person = {}
+>>> type(person)
+<class 'dict'>
+
+>>> person['fname'] = 'Joe'
+>>> person['lname'] = 'Fonebone'
+>>> person['age'] = 51
+>>> person['spouse'] = 'Edna'
+>>> person['children'] = ['Ralph', 'Betty', 'Joey']
+>>> person['pets'] = {'dog':  'Fido', 'cat': 'Sox'}
+<cod>
+</pre>
+<p>После создания словаря таким образом доступ к его значениям осуществляется так же, как и к любому другому словарю:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> person
+{'fname': 'Joe', 'lname': 'Fonebone', 'age': 51, 'spouse': 'Edna', 'children': ['Ralph', 'Betty', 'Joey'], 'pets': {'dog': 'Fido', 'cat': 'Sox'}}
+
+>>> person['fname']
+'Joe'
+>>> person['age']
+51
+>>> person['children']
+['Ralph', 'Betty', 'Joey']
+<cod>
+</pre>
+<p>Для получения значений в подсписке или подсловаре требуется дополнительный индекс или ключ:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> person['children']
+['Ralph', 'Betty', 'Joey']
+>>> person['children'][-1]
+'Joey'
+>>> person['pets']['cat']
+'Sox'
+<cod>
+</pre>
+<p>В этом примере демонстрируется еще одна особенность словарей: значения, содержащиеся в словаре, не обязательно должны быть одного типа.
+ В person некоторые значения являются строками, одно&nbsp;&mdash; целое число, одно&nbsp;&mdash; список, а третье&nbsp;&mdash; другой словарь.
+Ключи так же, как значения в словаре не обязательно должны быть одного и того же типа:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> foo = {42: 'aaa', 2.78: 'bbb', True: 'ccc'}
+>>> foo
+{42: 'aaa', 2.78: 'bbb', True: 'ccc'}
+>>> foo[42]
+'aaa'
+>>> foo[2.78]
+'bbb'
+>>> foo[True]
+'ccc'
+<cod>
+</pre>
+<p>Здесь один из ключей&nbsp;&mdash; целое число, один&nbsp;&mdash; число с плавающей запятой, а третий&nbsp;&mdash; логическое . 
+Обратите внимание, насколько универсальны словари Python. В MLB_team информация о названии бейсбольной команды сохраняется для каждого географического места. Словарь person хранит различные типы данных для одного человека.
+Вы можете использовать словари для самых разных целей, потому что существует очень мало ограничений на разрешенные ключи и значения. Но ограничения существуют. Читайте дальше!</p>
+
+<a name="tips4"><h2>Ограничения для ключей словаря</h2></a>
+<p>Почти любой тип значения может использоваться в качестве словарного ключа в Python. Вы только что видели пример, где в качестве ключей используются целочисленные, плавающие и логические объекты:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> foo = {42: 'aaa', 2.78: 'bbb', True: 'ccc'}
+>>> foo
+{42: 'aaa', 2.78: 'bbb', True: 'ccc'}
+
+<cod>
+</pre>
+<p>Вы даже можете использовать встроенные объекты, такие как типы и функции:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {int: 1, float: 2, bool: 3}
+>>> d
+{<class 'int'>: 1, <class 'float'>: 2, <class 'bool'>: 3}
+>>> d[float]
+2
+
+>>> d = {bin: 1, hex: 2, oct: 3}
+>>> d[oct]
+3
+<cod>
+</pre>
+<p>Однако есть пара ограничений, которым должны соответствовать словарные ключи.</p>
+
+<p>Во-первых, данный ключ может появиться в словаре только один раз. Повторяющиеся ключи не допускаются. Словарь сопоставляет каждый ключ с соответствующим значением, поэтому нет смысла отображать конкретный ключ более одного раза.</p>
+
+<p>Вы видели выше, что когда вы присваиваете значение уже существующему ключу словаря, он не добавляет ключ второй раз, а заменяет существующее значение:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team = {
+	'Colorado'  : 'Rockies',
+	'Boston'    : 'Red Sox',
+	'Minnesota' : 'Twins',
+	'Milwaukee' : 'Brewers',
+	'Seattle'   : 'Mariners',
+}
+>>> MLB_team['Minnesota']='Timberwolves'
+>>> MLB_team
+{'Colorado': 'Rockies', 'Boston': 'Red Sox', 'Minnesota': 'Timberwolves', 'Milwaukee': 'Brewers', 'Seattle': 'Mariners'}
+<cod>
+</pre>
+<p>Точно так же, если вы один и тот же ключ укажете два раза, то второе значение заменит первое:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team = {
+	'Colorado'  : 'Rockies',
+	'Boston'    : 'Red Sox',
+	'Minnesota' : 'Twins',
+	'Milwaukee' : 'Brewers',
+	'Seattle'   : 'Mariners',
+	'Minnesota' : 'Twins'
+}
+>>> MLB_team
+{'Colorado': 'Rockies', 'Boston': 'Red Sox', 'Minnesota': 'Twins', 'Milwaukee': 'Brewers', 'Seattle': 'Mariners'}
+<cod>
+</pre>
+<p>Во-вторых, ключ словаря должен иметь неизменяемый тип. Вы уже видели примеры, в которых несколько неизменяемых типов&nbsp;&mdash; integer, float, string и Boolean&nbsp;&mdash; служили ключами словаря.</p>
+
+<p>Кортеж также может быть ключом словаря, потому что кортежи неизменяемы:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d={(1,1):'a',(1,2):'b',(2,1):'c',(2,2):'d'}
+>>> d[(1,1)]
+'a'
+>>> d[(2,1)]
+'c'
+<cod>
+</pre>
+<p>(Вспомните из обсуждения кортежей, что одно из оснований для использования кортежа вместо списка состоит в том, что существуют обстоятельства, когда требуется неизменяемый тип. Это одно из них.)</p>
+
+<p>Однако ни список, ни другой словарь не могут служить ключом словаря, потому что списки и словари изменяемы:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d={[1,1]:'a',[1,2]:'b',[2,1]:'c',[2,2]:'d'}
+Traceback (most recent call last):
+  File "<pyshell#60>", line 1, in <module>
+    d={[1,1]:'a',[1,2]:'b',[2,1]:'c',[2,2]:'d'}
+TypeError: unhashable type: 'list'
+<cod>
+</pre>
+<p>Примечание. Почему в сообщении об ошибке написано «нехэшируемое»?</p>
+
+<p>Технически не совсем правильно говорить, что объект должен быть неизменным, чтобы его можно было использовать в качестве словарного ключа. Точнее, объект должен быть хешируемым, что означает, что его можно передать хеш-функции. Хеш-функция принимает данные произвольного размера и сопоставляет их с относительно более простым значением фиксированного размера, называемым хеш-значением(или просто хешем), которое используется для поиска и сравнения в таблице.</p>
+
+<p>Встроенная hash() функция Python возвращает хеш-значение для хешируемого объекта и вызывает исключение для объекта, который таким не является:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> hash('foo')
+-1366538220
+
+>>> hash([1,2,3])
+Traceback (most recent call last):
+  File "<pyshell#63>", line 1, in <module>
+    hash([1,2,3])
+TypeError: unhashable type: 'list'
+<cod>
+</pre>
+<p>Все встроенные неизменяемые типы, о которых вы узнали до сих пор, являются хешируемыми, а изменяемые типы(списки и словари)&nbsp;&mdash; нет. Итак, для настоящих целей вы можете думать о хэшируемом и неизменяемом как о более или менее синонимах.</p>
+
+<p>В будущих уроках вы встретите изменяемые объекты, которые также могут быть хешированы.</p>
+
+<a name="tips5"><h2>Ограничения на значения словаря</h2></a>
+<p>Напротив, нет ограничений на значения словаря. Буквально совсем нет. Значение словаря может быть любым типом объекта, поддерживаемым Python, включая изменяемые типы, такие как списки и словари, а также определяемые пользователем объекты, о которых вы узнаете в следующих руководствах.</p>
+
+<p>Также нет ограничений на то, чтобы определенное значение появлялось в словаре несколько раз:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d={0:'a',1:'a',2:'a',3:'a'}
+>>> d
+{0: 'a', 1: 'a', 2: 'a', 3: 'a'}
+>>> d[0]==d[1]==d[2]
+True
+<cod>
+</pre>
+<a name="tips6"><h2>Операторы и встроенные функции</h2></a>
+<p>Вы уже познакомились со многими операторами и встроенными функциями, которые можно использовать со строками, списками и кортежами. Некоторые из них также работают со словарями.</p>
+
+<p>Например, in и not in операторы возвращают True или в False в соответствии с тем, подходит ли указанный операнд в качестве ключа в словаре:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+MLB_team = {
+	'Colorado'  : 'Rockies',
+	'Boston'    : 'Red Sox',
+	'Minnesota' : 'Twins',
+	'Milwaukee' : 'Brewers',
+	'Seattle'   : 'Mariners',
+	'Minnesota' : 'Twins'
+}
+>>> 'Milwaukee' in MLB_team
+True
+>>> 'Toronto' in MLB_team
+False
+>>> 'Toronto' not in MLB_team
+True
+<cod>
+</pre>
+<p>Вы можете использовать оператор in вместе с оценкой True или False, чтобы избежать появления ошибки при попытке доступа к ключу, которого нет в словаре:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team['Toronto']
+Traceback (most recent call last):
+  File "<pyshell#71>", line 1, in <module>
+    MLB_team['Toronto']
+KeyError: 'Toronto'
+
+>>> 'Toronto' in MLB_team and MLB_team['Toronto']
+False
+<cod>
+</pre>
+<p>Во втором случае из-за оценки False выражение MLB_team['Toronto'] не оценивается, поэтому ошибка не возникает.</p>
+
+<p>Функция len() возвращает количество пар ключ-значение в словаре:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> MLB_team = {
+	'Colorado'  : 'Rockies',
+	'Boston'    : 'Red Sox',
+	'Minnesota' : 'Twins',
+	'Milwaukee' : 'Brewers',
+	'Seattle'   : 'Mariners',
+	'Minnesota' : 'Twins'
+}
+>>> len(MLB_team)
+5
+<cod>
+</pre>
+<a name="tips7"><h2>Встроенные словарные методы</h2></a>
+<p>Как и в случае со строками и списками, есть несколько встроенных методов, которые можно вызывать в словарях. Фактически, в некоторых случаях методы списка и словаря имеют одно и то же имя(при обсуждении объектно&#8209;ориентированного программирования вы увидите, что для разных типов вполне приемлемо иметь методы с одинаковыми именами.)</p>
+
+<p>Ниже приводится обзор методов, применимых к словарям:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d.clear()
+# Очищает словарь
+<cod>
+</pre>
+<p>d.clear() очищает словарь для всех пар ключ-значение:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d={'a':10,'b':20,'c':30}
+>>> d
+{'a': 10, 'b': 20, 'c': 30}
+>>> d.clear()
+>>> d
+{}
+<cod>
+</pre>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d.get(&lt key &gt[,&lt default &gt])
+# Возвращает значение ключа, если он существует в словаре
+<cod>
+</pre>
+<p>Метод d.get() предоставляет удобный способ получения значения ключа из словаря без предварительной проверки наличия ключа и без возникновения ошибки.</p>
+
+<p>d.get() ищет значение по ключу и возвращает его, если оно найден. Если не найдено, возвращается None:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d={'a':10,'b':20,'c':30}
+>>> print(d.get('b'))
+20
+>>> print(d.get('z'))
+None
+<cod>
+</pre>
+<p>Если указано необязательный аргумент и значение не найдено, то возвращается необязательный элемент:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> print(d.get('z',-1))
+-1
+<cod>
+</pre>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d.items()
+# Возвращает список пар ключ-значение в словаре
+<cod>
+</pre>
+<p>d.items() возвращает список кортежей, содержащих пары ключ-значение в d. Первый элемент в каждом кортеже&nbsp;&mdash; это ключ, а второй элемент&nbsp;&mdash; значение ключа:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d={'a':10,'b':20,'c':30}
+>>> d
+{'a': 10, 'b': 20, 'c': 30}
+
+>>> list(d.items())
+[('a', 10), ('b', 20), ('c', 30)]
+>>> list(d.items())[1][0]
+'b'
+>>> list(d.items())[1][1]
+20
+<cod>
+</pre>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d.keys()
+# Возвращает список ключей в словаре
+<cod>
+</pre>
+<p>d.keys() возвращает список всех ключей в d:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {'a': 10, 'b' : 20, 'c' : 30}
+>>> d
+{'a': 10, 'b': 20, 'c': 30}
+>>> list(d.keys())
+['a', 'b', 'c']
+<cod>
+</pre>
+</pre>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d.values()
+# Возвращает список значений в словаре
+<cod>
+</pre>
+<p>d.values() возвращает список всех значений в d:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {'a': 10, 'b' : 20, 'c' : 30}
+>>> d
+{'a': 10, 'b': 20, 'c': 30}
+>>> list(d.values())
+[10, 20, 30]
+<cod>
+</pre>
+<p>Любые повторяющиеся значения d будут возвращаться столько раз, сколько они встречаются:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {'a': 10, 'b' : 10, 'c' : 10}
+>>> d
+{'a': 10, 'b': 10, 'c': 10}
+>>> list(d.values())
+[10, 10, 10]
+<cod>
+</pre>
+<p>Техническое примечание: d.items(), d.keys() и d.values() это методы, которые фактически возвращают вид объекта. Для практических целей вы можете рассматривать эти методы как возвращающие списки ключей и значений словаря.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d.pop(&lt key &gt[,&lt default &gt])
+# Удаляет ключ из словаря, если он присутствует, и возвращает его значение.
+<cod>
+</pre>
+<p>Если ключ присутствует в d, то d.pop() удаляет его и возвращает связанное с ним значение:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {'a': 10, 'b' : 20, 'c' : 30}
+>>> d.pop('b')
+20
+>>> d
+{'a': 10, 'c': 30}
+<cod>
+</pre>
+<p>d.pop() показывает ошибку, если указанный ключ не находится в d:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {'a': 10, 'b' : 20, 'c' : 30}
+>>> d.pop('z')
+Traceback (most recent call last):
+  File "<pyshell#109>", line 1, in <module>
+    d.pop('z')
+KeyError: 'z'
+<cod>
+</pre>
+<p>Если отсутствует d и указан необязательный аргумент, то возвращается это значение, и ошибка не возникает:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d = {'a': 10, 'b' : 20, 'c' : 30}
+>>> d.pop('z', -1)
+-1
+>>> d
+{'a': 10, 'b': 20, 'c': 30}
+<cod>
+</pre>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d.popitem()
+# Удаляет пару ключ-значение из словаря.
+<cod>
+</pre>
+<p>d.popitem() удаляет последнюю добавленную пару ключ-значение d и возвращает ее как кортеж:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+{'a': 10, 'b': 20, 'c': 30}
+>>> d = {'a': 10, 'b' : 20, 'c' : 30}
+>>> d.popitem()
+('c', 30)
+>>> d
+{'a': 10, 'b': 20}
+>>> d.popitem()
+('b', 20)
+>>> d
+{'a': 10}
+<cod>
+</pre>
+<p>Если d пусто, d.popitem() возникает ошибка:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d={}
+>>> d.popitem()
+Traceback (most recent call last):
+  File "<pyshell#119>", line 1, in <module>
+    d.popitem()
+KeyError: 'popitem(): dictionary is empty'
+<cod>
+</pre>
+<p>Примечание. В версиях Python менее 3.6 popitem() возвращала бы произвольную(случайную) пару ключ-значение, поскольку словари Python были неупорядоченными до версии 3.6.</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+d.update(&lt obj &gt)
+# Объединяет словарь с другим словарем или с парами ключ-значение
+<cod>
+</pre>
+
+<p>Если это словари, d.update() объединяет записи из этих словарей. Для каждого ключа в :</p>
+
+<ul>
+<li>Если ключ отсутствует d, пара ключ-значение добавляется в d.</li>
+<li>Если ключ уже присутствует в d, соответствующее значение в d для этого ключа обновляется.</li> 
+</ul>
+<p>Вот пример объединения двух словарей:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d1={'a' : 10, 'b' : 20, 'c' : 30}
+>>> d2={'b' : 200, 'd' : 400}
+>>> d1.update(d2)
+>>> d1
+{'a': 10, 'b': 200, 'c': 30, 'd': 400}
+<cod>
+</pre>
+<p>В этом примере ключ 'b' уже существует в d1, поэтому его значение обновляется до значения для этого ключа из d2(200). Однако, отсутствует ключ 'd' в d1, так что пара ключ-значение ('d':400) добавляется из d2.
+<p>Также может добавляться в словарь последовательностью пар ключ-значение, аналогично тому, как dict() функция используется для определения словаря. Например, можно указать список кортежей:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d1={'a' : 10, 'b' : 20, 'c' : 30}
+>>> d1.update([('b', 200), ('d', 400)])
+>>> d1
+{'a': 10, 'b': 200, 'c': 30, 'd': 400}
+<cod>
+</pre>
+<p>Или значения для объединения можно указать в виде списка аргументов ключевого слова:</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="python">
+<cod>
+>>> d1={'a' : 10, 'b' : 20, 'c' : 30}
+>>> d1.update(b=200,d=400)
+>>> d1
+{'a': 10, 'b': 200, 'c': 30, 'd': 400}
+<cod>
+</pre>
+<a name="tips8"><h2>Вывод</h2></a>
+<p>В этом руководстве вы рассмотрели основные свойства словаря Python и узнали, как получить доступ и управлять данными словаря.</p>
+
+<p>Списки и словари&nbsp;&mdash; два наиболее часто используемых типа Python. Как вы видели, они имеют несколько общих черт, но отличаются способом доступа к их элементам. Доступ к элементам списков осуществляется по числовому индексу в зависимости от порядка, а к элементам словаря&nbsp;&mdash; по ключу.</p>
+
+<p>Из-за этой разницы списки и словари подходят для разных ситуаций. Теперь вы должны хорошо почувствовать, что лучше всего подходит для данной ситуации.
+Далее вы узнаете о наборах Python. Набор&nbsp;&mdash; это еще один составной тип данных, но он сильно отличается от списка или словаря.</p>
+
+
+
+
